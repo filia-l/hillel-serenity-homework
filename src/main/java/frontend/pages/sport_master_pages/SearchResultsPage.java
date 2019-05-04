@@ -1,5 +1,6 @@
-package frontend.pages;
+package frontend.pages.sport_master_pages;
 
+import frontend.pages.AbstractPage;
 import net.serenitybdd.core.pages.WebElementFacade;
 import org.openqa.selenium.WebDriver;
 

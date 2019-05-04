@@ -1,7 +1,7 @@
 package serenity.steps.sportmaster;
 
-import frontend.pages.SportMasterMainPage;
-import frontend.panels.SearchPanel;
+import frontend.pages.sport_master_pages.SportMasterMainPage;
+import frontend.panels.sport_master_panels.SearchPanel;
 import net.thucydides.core.annotations.Step;
 import net.thucydides.core.pages.Pages;
 import net.thucydides.core.steps.ScenarioSteps;
@@ -23,6 +23,11 @@ public class SportMasterMainPageSteps extends ScenarioSteps {
     public void selectCityInPanel(final String cityName) {
         sportMasterMainPage.getChooseCityPanel().selectCity(cityName);
         sportMasterMainPage.waitUntilCityPanelInvisible();
+    }
+
+    @Step
+    public String getToolbarCityName() {
+        return sportMasterMainPage.getToolbarPanel().getCurrentCityName();
     }
 
     @Step

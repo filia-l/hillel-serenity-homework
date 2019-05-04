@@ -1,6 +1,6 @@
 package serenity.steps.google;
 
-import frontend.pages.GoogleMainPage;
+import frontend.pages.google_pages.GoogleMainPage;
 import net.thucydides.core.annotations.Step;
 import net.thucydides.core.pages.Pages;
 import net.thucydides.core.steps.ScenarioSteps;

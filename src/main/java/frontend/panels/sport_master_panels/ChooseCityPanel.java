@@ -1,6 +1,7 @@
-package frontend.panels;
+package frontend.panels.sport_master_panels;
 
 import frontend.pages.AbstractPage;
+import frontend.panels.AbstractPanel;
 import net.serenitybdd.core.pages.WebElementFacade;
 
 public class ChooseCityPanel extends AbstractPanel {

@@ -1,5 +1,6 @@
-package frontend;
+package frontend.pages.google_pages;
 
+import frontend.pages.AbstractPage;
 import org.openqa.selenium.WebDriver;
 
 public class GoogleMainPage extends AbstractPage {

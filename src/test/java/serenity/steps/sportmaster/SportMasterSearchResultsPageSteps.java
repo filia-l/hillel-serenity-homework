@@ -1,6 +1,6 @@
 package serenity.steps.sportmaster;
 
-import frontend.pages.SearchResultsPage;
+import frontend.pages.sport_master_pages.SearchResultsPage;
 import net.thucydides.core.annotations.Step;
 import net.thucydides.core.pages.Pages;
 import net.thucydides.core.steps.ScenarioSteps;

@@ -25,6 +25,9 @@ public class SportMasterScenario {
     @Given("user selects current city: '$cityName'")
     public void selectCurrentCity(String cityName) {
         sportMasterMainPageSteps.selectCityInPanel(cityName);
+        final String actualDisplayedCity = sportMasterMainPageSteps.getToolbarCityName();
+
+        Assert.assertEquals("Incorrect city name displayed in toolbar!", actualDisplayedCity, cityName);
     }
 
     @When("search for next item: '$item'")
