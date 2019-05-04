@@ -20,6 +20,12 @@ public class SportMasterMainPageSteps extends ScenarioSteps {
     }
 
     @Step
+    public void selectCityInPanel(final String cityName) {
+        sportMasterMainPage.getChooseCityPanel().selectCity(cityName);
+        sportMasterMainPage.waitUntilCityPanelInvisible();
+    }
+
+    @Step
     public void searchFor(final String item) {
         final SearchPanel searchPanel = sportMasterMainPage.getSearchPanel();
         searchPanel.inputSearchText(item);

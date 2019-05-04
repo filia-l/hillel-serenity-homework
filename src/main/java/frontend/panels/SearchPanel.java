@@ -12,6 +12,6 @@ public class SearchPanel extends AbstractPanel {
     }
 
     public void inputSearchText(final String text) {
-        getRootPage().findBy(SEARCH_INPUT_LOCATOR).typeAndEnter(text);
+        getRootPage().findBy(SEARCH_INPUT_LOCATOR).waitUntilVisible().typeAndEnter(text);
     }
 }

@@ -16,4 +16,3 @@ And 'Google' label should be available to display
 Examples:
 | siteUrl                  | expectedUrl |
 | https://www.google.com   | Google      |
-| https://www.google.com   | Google_1    |

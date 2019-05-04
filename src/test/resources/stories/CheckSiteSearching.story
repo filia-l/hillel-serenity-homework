@@ -8,5 +8,6 @@ So that I can achieve a business goal
 Scenario: Verify user is able to search item, using searchbar
 
 Given user opens page, by using following link: 'https://www.sportmaster.ua/ru/'
+And user selects current city: 'Киев'
 When search for next item: 'ff'
 Then following message is displayed: 'Поиск По запросу «ff» ничего не найдено'

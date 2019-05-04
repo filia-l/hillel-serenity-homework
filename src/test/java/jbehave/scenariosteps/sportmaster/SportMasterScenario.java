@@ -22,6 +22,11 @@ public class SportMasterScenario {
         sportMasterMainPageSteps.openPage(link);
     }
 
+    @Given("user selects current city: '$cityName'")
+    public void selectCurrentCity(String cityName) {
+        sportMasterMainPageSteps.selectCityInPanel(cityName);
+    }
+
     @When("search for next item: '$item'")
     public void searchFor(final String item) {
 
