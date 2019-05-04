@@ -27,6 +27,6 @@ public class SportMasterMainPage extends AbstractPage {
     public ToolbarPanel getToolbarPanel() { return new ToolbarPanel(findBy(TOOLBAR_PANEL_LOCATOR), this); }
 
     public void waitUntilCityPanelInvisible() {
-        waitForAbsenceOf(SEARCH_PANEL_LOCATOR);
+        waitForAbsenceOf(CHOOSE_CITY_PANEL_LOCATOR);
     }
 }

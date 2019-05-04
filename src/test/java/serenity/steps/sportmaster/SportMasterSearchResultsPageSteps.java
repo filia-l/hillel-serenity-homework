@@ -17,4 +17,9 @@ public class SportMasterSearchResultsPageSteps extends ScenarioSteps {
     public String getDisplayedSearchMessage() {
         return searchResultsPage.getSearchMessage();
     }
+
+    @Step
+    public void selectProductFromSearchResults(String productTitle) {
+        searchResultsPage.getSearchedProductsPanel().selectProductFromResults(productTitle);
+    }
 }

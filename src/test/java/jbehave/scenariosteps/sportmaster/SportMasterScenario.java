@@ -1,13 +1,19 @@
 package jbehave.scenariosteps.sportmaster;
 
+import dto.sport_master_dto.Product;
 import net.serenitybdd.core.Serenity;
 import net.thucydides.core.annotations.Steps;
+import org.jbehave.core.annotations.Alias;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
 import org.junit.Assert;
 import serenity.steps.sportmaster.SportMasterMainPageSteps;
+import serenity.steps.sportmaster.SportMasterProductPageSteps;
 import serenity.steps.sportmaster.SportMasterSearchResultsPageSteps;
+import serenity.steps.sportmaster.SportMasterShoppingCartPageSteps;
+
+import java.util.Arrays;
 
 public class SportMasterScenario {
 
@@ -16,6 +22,12 @@ public class SportMasterScenario {
 
     @Steps
     private SportMasterSearchResultsPageSteps sportMasterSearchResultsPageSteps;
+
+    @Steps
+    private SportMasterProductPageSteps productPageSteps;
+
+    @Steps
+    SportMasterShoppingCartPageSteps shoppingCartPageSteps;
 
     @Given("user opens page, by using following link: '$link'")
     public void openMainPage(final String link) {
@@ -30,21 +42,54 @@ public class SportMasterScenario {
         Assert.assertEquals("Incorrect city name displayed in toolbar!", actualDisplayedCity, cityName);
     }
 
-    @When("search for next item: '$item'")
+    @When("user searches for next item: '$item'")
     public void searchFor(final String item) {
-
-        Serenity.setSessionVariable("some_key").to(item); // положить айтем в сессию по ключу some_key
+        Serenity.setSessionVariable("input_item_key").to(item); // положить айтем в сессию по ключу some_key
 
         sportMasterMainPageSteps.searchFor(item);
     }
 
     @Then("following message is displayed: '$message'")
-    public void isMessageDisplayed(final String expectedSearchMessage) {
+    @Alias("page title is: '$pageTitle'")
+    public void isMessageDisplayed(final String message) {
+        String searchItem = Serenity.sessionVariableCalled("input_item_key"); // достать айтем из сессии по ключу some_key
+
         final String actualSearchMessage = sportMasterSearchResultsPageSteps.getDisplayedSearchMessage();
+        final String expectedSearchMessage = String.format(message, searchItem);
 
-        String s = Serenity.sessionVariableCalled("some_key"); // достать айтем из сессии по ключу some_key
+        Assert.assertTrue("There is incorrect search message displayed!",
+                actualSearchMessage.contains(expectedSearchMessage));
+    }
 
-        Assert.assertEquals("There is incorrect search message displayed!",
-                actualSearchMessage, expectedSearchMessage);
+    @When("user selects following product: '$productTitle'")
+    public void selectProduct(String productTitle) {
+        Serenity.setSessionVariable("selected_product").to(productTitle);
+        sportMasterSearchResultsPageSteps.selectProductFromSearchResults(productTitle);
+    }
+
+    @Then("user is on a selected product page")
+    public void getSelectedProductTitle() {
+        final String expectedProductTitle = Serenity.sessionVariableCalled("selected_product");
+        final String actualProductTitle = productPageSteps.getCurrentProductTitle();
+
+        Assert.assertTrue("Incorrect product title is displayed!", actualProductTitle.contains(expectedProductTitle));
+    }
+
+    @When("user selects product size: '$size'")
+    public void setSizeToProduct(String size) {
+        productPageSteps.setProductSize(size);
+
+        final Product expectedProductDTO = productPageSteps.getSelectedProductDTO();
+        Serenity.setSessionVariable("expected_product").to(expectedProductDTO);
+    }
+
+    @When("user adds product to cart")
+    public void addToCart() {
+        productPageSteps.addItemToCart();
+    }
+
+    @Then("user gets needed text")
+    public void getText() {
+        System.out.println(Arrays.toString(shoppingCartPageSteps.getItemColorAndSize().replace(" ", "").split(":")));
     }
 }
