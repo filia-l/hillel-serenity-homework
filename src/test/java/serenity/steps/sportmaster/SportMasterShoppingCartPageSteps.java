@@ -20,8 +20,4 @@ public class SportMasterShoppingCartPageSteps extends PageObject {
     public Product getProductDTO() {
         return shoppingCartPage.getCartProductPanel().getAddedProductDTO();
     }
-
-    public String[] colorSize() {
-        return shoppingCartPage.getCartProductPanel().getProductColorAndSize();
-    }
 }

@@ -29,10 +29,9 @@ public class ProductPanel extends AbstractPanel {
     public Product getProductDTO() {
         Product product = new Product();
         product.setTitle(getRootPage().findBy(PRODUCT_TITLE_LOCATOR).getText());
-        product.setPrice(getRootPage().findBy(PRODUCT_PRICE_LOCATOR).getText());
+        product.setPrice(getRootPage().findBy(PRODUCT_PRICE_LOCATOR).getText().replace(".", ""));
         product.setColor(getRootPage().findBy(PRODUCT_SELECTED_COLOR_LOCATOR).getAttribute("title"));
         product.setSize(getRootPage().findBy(PRODUCT_SELECTED_SIZE_LOCATOR).getText());
-
         return product;
     }
 

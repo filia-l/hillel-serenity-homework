@@ -13,7 +13,6 @@ Then following message is displayed: 'По запросу «%s» найдено 
 When user selects following product: 'Велосипед городской женский Stern Urban 1.0 Lady 28'
 And user selects product size: '150-162'
 And user adds product to cart
-Then user gets needed text
 Then user verifies that added item characteristics are correctly displayed in the shopping cart:
 | title                                                | color   | size    | price     |
 | Велосипед городской женский Stern Urban 1.0 Lady 28" | голубой | 150-162 | 6 399 грн |

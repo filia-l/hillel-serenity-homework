@@ -21,5 +21,4 @@ public class ProductPage extends AbstractPage {
     public SelectedProductPreviewPanel getProductPreviewPanel() {
         return new SelectedProductPreviewPanel(findBy(PRODUCT_ADDED_TO_CART_PANEL_LOCATOR), this);
     }
-
 }

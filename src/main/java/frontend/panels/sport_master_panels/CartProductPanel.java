@@ -19,8 +19,16 @@ public class CartProductPanel extends AbstractPanel {
         return getRootPage().findBy(ADDED_PRODUCT_TITLE_LOCATOR).getText();
     }
 
-    public String[] getProductColorAndSize() {
+    private String[] getProductColorAndSize() {
         return getRootPage().findBy(ADDED_PRODUCT_COLOR_SIZE_LOCATOR).getText().replace(" ", "").split(":");
+    }
+
+    private String getAddedProductColor() {
+        return getProductColorAndSize()[2];
+    }
+
+    private String getAddedProductSize() {
+        return getProductColorAndSize()[1].replaceAll("[^-0-9]", "");
     }
 
     private String getAddedProductPrice() {
@@ -31,9 +39,8 @@ public class CartProductPanel extends AbstractPanel {
         Product product = new Product();
         product.setTitle(getAddedProductTitle());
         product.setPrice(getAddedProductPrice());
-        product.setColor(getProductColorAndSize()[2]);
-        product.setSize((getProductColorAndSize()[1]).replaceAll("[^-0-9]", ""));
-
+        product.setColor(getAddedProductColor());
+        product.setSize(getAddedProductSize());
         return product;
     }
 }

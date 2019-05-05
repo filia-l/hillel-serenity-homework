@@ -15,8 +15,6 @@ import serenity.steps.sportmaster.SportMasterSearchResultsPageSteps;
 import serenity.steps.sportmaster.SportMasterShoppingCartPageSteps;
 import org.unitils.reflectionassert.ReflectionAssert;
 
-import java.util.Arrays;
-
 public class SportMasterScenario {
 
     @Steps
@@ -29,7 +27,7 @@ public class SportMasterScenario {
     private SportMasterProductPageSteps productPageSteps;
 
     @Steps
-    SportMasterShoppingCartPageSteps shoppingCartPageSteps;
+    private SportMasterShoppingCartPageSteps shoppingCartPageSteps;
 
     @Given("user opens page, by using following link: '$link'")
     public void openMainPage(final String link) {
@@ -41,7 +39,7 @@ public class SportMasterScenario {
         sportMasterMainPageSteps.selectCityInPanel(cityName);
         final String actualDisplayedCity = sportMasterMainPageSteps.getToolbarCityName();
 
-        Assert.assertEquals("Incorrect city name displayed in toolbar!", actualDisplayedCity, cityName);
+        Assert.assertEquals("Incorrect city name displayed in toolbar!", cityName, actualDisplayedCity);
     }
 
     @When("user searches for next item: '$item'")
@@ -71,14 +69,6 @@ public class SportMasterScenario {
         Assert.assertTrue("Incorrect product title is displayed!", actualProductTitle.contains(productTitle));
     }
 
-    @Then("user is on a selected product page")
-    public void getSelectedProductTitle() {
-        final String expectedProductTitle = Serenity.sessionVariableCalled("selected_product");
-        final String actualProductTitle = productPageSteps.getCurrentProductTitle();
-
-        Assert.assertTrue("Incorrect product title is displayed!", actualProductTitle.contains(expectedProductTitle));
-    }
-
     @When("user selects product size: '$size'")
     public void setSizeToProduct(String size) {
         productPageSteps.setProductSize(size);
@@ -98,13 +88,12 @@ public class SportMasterScenario {
     @Then("user verifies that added item characteristics are correctly displayed in the shopping cart: $shoppingCartData")
     public void verifyProductCharacteristics(final ExamplesTable shoppingCartData) {
         final Product expectedProductDTO = shoppingCartData.getRowsAs(Product.class).get(0);
+        final Product expectedSelectedProductDTO = Serenity.sessionVariableCalled("expected_product");
         final Product actualProductDTO = shoppingCartPageSteps.getProductDTO();
 
+        //Compares actual product DTO to information from the table
         ReflectionAssert.assertReflectionEquals("Product characteristics are incorrect", expectedProductDTO, actualProductDTO);
-    }
-
-    @Then("user gets needed text")
-    public void getText() {
-        System.out.println(Arrays.toString(shoppingCartPageSteps.colorSize()));
+        //Compares actual product DTO to information saved on product page before adding to cart
+        ReflectionAssert.assertReflectionEquals("Product characteristics are incorrect", expectedSelectedProductDTO, actualProductDTO);
     }
 }
