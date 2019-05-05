@@ -11,8 +11,9 @@ And user selects current city: 'Киев'
 When user searches for next item: 'велосипед'
 Then following message is displayed: 'По запросу «%s» найдено товаров:'
 When user selects following product: 'Велосипед городской женский Stern Urban 1.0 Lady 28'
-Then user is on a selected product page
-When user selects product size: '150-162'
+And user selects product size: '150-162'
 And user adds product to cart
-Then page title is: 'Корзина'
-And user gets needed text
+Then user gets needed text
+Then user verifies that added item characteristics are correctly displayed in the shopping cart:
+| title                                                | color   | size    | price     |
+| Велосипед городской женский Stern Urban 1.0 Lady 28" | голубой | 150-162 | 6 399 грн |

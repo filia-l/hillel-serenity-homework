@@ -7,11 +7,13 @@ import org.jbehave.core.annotations.Alias;
 import org.jbehave.core.annotations.Given;
 import org.jbehave.core.annotations.Then;
 import org.jbehave.core.annotations.When;
+import org.jbehave.core.model.ExamplesTable;
 import org.junit.Assert;
 import serenity.steps.sportmaster.SportMasterMainPageSteps;
 import serenity.steps.sportmaster.SportMasterProductPageSteps;
 import serenity.steps.sportmaster.SportMasterSearchResultsPageSteps;
 import serenity.steps.sportmaster.SportMasterShoppingCartPageSteps;
+import org.unitils.reflectionassert.ReflectionAssert;
 
 import java.util.Arrays;
 
@@ -63,8 +65,10 @@ public class SportMasterScenario {
 
     @When("user selects following product: '$productTitle'")
     public void selectProduct(String productTitle) {
-        Serenity.setSessionVariable("selected_product").to(productTitle);
         sportMasterSearchResultsPageSteps.selectProductFromSearchResults(productTitle);
+
+        final String actualProductTitle = productPageSteps.getCurrentProductTitle();
+        Assert.assertTrue("Incorrect product title is displayed!", actualProductTitle.contains(productTitle));
     }
 
     @Then("user is on a selected product page")
@@ -86,10 +90,21 @@ public class SportMasterScenario {
     @When("user adds product to cart")
     public void addToCart() {
         productPageSteps.addItemToCart();
+        String actualTitle = shoppingCartPageSteps.getShoppingCartTitle();
+
+        Assert.assertEquals("Shopping cart page title is incorrect!", actualTitle, "Корзина");
+    }
+
+    @Then("user verifies that added item characteristics are correctly displayed in the shopping cart: $shoppingCartData")
+    public void verifyProductCharacteristics(final ExamplesTable shoppingCartData) {
+        final Product expectedProductDTO = shoppingCartData.getRowsAs(Product.class).get(0);
+        final Product actualProductDTO = shoppingCartPageSteps.getProductDTO();
+
+        ReflectionAssert.assertReflectionEquals("Product characteristics are incorrect", expectedProductDTO, actualProductDTO);
     }
 
     @Then("user gets needed text")
     public void getText() {
-        System.out.println(Arrays.toString(shoppingCartPageSteps.getItemColorAndSize().replace(" ", "").split(":")));
+        System.out.println(Arrays.toString(shoppingCartPageSteps.colorSize()));
     }
 }
